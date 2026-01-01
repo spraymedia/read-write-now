@@ -1,0 +1,873 @@
+
+╭─── Claude Code v2.0.76 ──────────────────────────────────────────────────────╮
+│                                                    │ Tips for getting        │
+│               Welcome back FLAGSALON!              │ started                 │
+│                                                    │ Run /init to create a … │
+│                    * ▗ ▗   ▖ ▖ *                   │ ─────────────────────── │
+│                   *             *                  │ Recent activity         │
+│                    *   ▘▘ ▝▝   *                   │ No recent activity      │
+│                                                    │                         │
+│    Opus 4.5 · Claude Max · info@flagsalon.com's    │                         │
+│    Organization                                    │                         │
+│           /Volumes/mark1t/git2/read-write          │                         │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+  A gift for you
+  Your rate limits are 2x higher through 12/31. Enjoy the extra room to think!
+
+> ok i need a way to have text to speech on this website i am building which
+ is for people wanting to learn how to read and write etc, but i feel others
+ will want to look at it for other people needing help. and lets face it if
+someone is struggling to read are they going to go deep into pages, i will
+need to make this work in wordpress https://readwrite.linkz.au/ and here is
+my current site i am building, im thinking do i have a text to speech
+button, or maybe on pages have a way to have a summarise button of what is
+on the page which we can extract content from the page and send it to
+something like open ai to have text to speech done, and store it, but be
+able to adjust the text. what is the best way as we don't need to over do
+this and put speech buttons all over the page as that would defy the point,
+ultrathink of what i should do and check pages and lets fine tune a soltuion
+
+
+⏺ I'll explore your codebase and both sites to understand the content structure and user needs, then design the best TTS approach for your literacy-focused audience.
+
+⏺ Explore(Explore React site structure)
+  ⎿  Done (4 tool uses · 23.8k tokens · 1m 0s)                             
+  ⎿  Tabs read
+
+⏺ Search(pattern: "src/pages/**/*.tsx")
+  ⎿  Found 22 files (ctrl+o to expand)
+
+⏺ Search(pattern: "src/components/**/*.tsx")
+  ⎿  Found 13 files (ctrl+o to expand)
+
+⏺ I can see you already have "Listen" buttons on the WordPress homepage! Let me look at your existing ListenButton component and explore a few key pages to understand the content depth.
+
+⏺ Read(src/components/ListenButton.tsx)
+  ⎿  Read 64 lines
+
+⏺ Read(src/pages/GetHelp.tsx)
+  ⎿  Read 156 lines
+
+⏺ Read(src/pages/GetHelpHowItWorks.tsx)
+  ⎿  Read 286 lines
+
+⏺ I can see you already have a ListenButton component using the browser's native SpeechSynthesis API. It currently only reads short hero text summaries. Let me check a content-heavy page on WordPress to understand the depth of content that needs TTS.
+
+⏺ Claude in Chrome[navigate](readwrite.linkz.au)
+  ⎿  Navigation completed
+
+⏺ I've now got a clear picture. Let me summarize what I found and ask some key questions:
+
+  What I Found
+
+  Current State:
+  - Your React site has a ListenButton component using browser's native SpeechSynthesis API
+  - It only reads a short hero summary (~20 words), not the full page content
+  - WordPress homepage has "Listen" buttons but they're placeholders (link to #)
+  - Pages like "How Does It Work" have substantial content (~500+ words)
+
+  The Challenge:
+  - Browser TTS has robotic, inconsistent voices across devices
+  - For people learning to read, voice quality and clarity are crucial
+  - You need something that works in WordPress/Elementor
+
+  Your Key Insight is Correct:
+  Putting speech buttons everywhere would be overwhelming. A simple, single-purpose approach is better for your audience.
+                                                                           
+⏺ User answered Claude's questions:
+  ⎿  · What TTS voice quality level do you need? Browser TTS is free but 
+     robotic. AI voices (OpenAI/ElevenLabs) sound natural but cost 
+     ~$0.01-0.03 per page read. → AI voices (natural)
+     · How should the audio work? Pre-generate and store audio files, or 
+     generate on-demand when user clicks? → Pre-generated audio
+     · Where should the Listen button appear? → One floating button
+
+⏺ Excellent choices! AI voices + pre-generated audio + floating button is the optimal approach for a literacy site. Let me design the implementation plan.
+  ⎿  Interrupted · What should Claude do instead?
+
+> don't forget we need to implement this on the wordpress site, so we may 
+need to make a plugin most likely? 
+
+⏺ You're right - a WordPress plugin is the cleanest approach. It keeps everything self-contained and easy to manage. Let me write up the full plan.
+
+⏺ Updated plan
+  ⎿  /plan to preview
+
+⏺ I've drafted the plan for a WordPress plugin. A couple of quick confirmations before we proceed:
+                                                                           
+⏺ User answered Claude's questions:
+  ⎿  · Do you have an OpenAI API key already, or do you need help setting 
+     one up? → No, need to set up
+     · Where should I create the plugin files? In the WordPress installation
+      or in your current repo for now? → Current repo
+
+⏺ Let me update the plan with those details and then we're ready to go.
+
+⏺ Updated plan
+  ⎿  /plan to preview
+
+⏺ The plan is complete. Here's a summary:
+
+  TTS Plugin Summary
+
+  What we're building:
+  - A WordPress plugin called read-write-now-tts
+  - Uses OpenAI's natural-sounding AI voices (~$0.45 total for all pages)
+  - Pre-generates audio files (fast playback, no delays)
+  - Single floating "Listen" button (bottom-right corner)
+  - Admin page to manage and regenerate audio
+
+  Plugin location: /Volumes/mark1t/git2/read-write/plugins/read-write-now-tts/
+
+  Key files:
+  1. Main plugin file with WordPress hooks
+  2. OpenAI TTS API integration
+  3. Content extraction from Elementor pages
+  4. Admin interface for managing audio
+  5. Floating player (JS + CSS)
+
+  You'll need to:
+  1. Set up an OpenAI API account (~$5 minimum credit)
+  2. Copy the plugin to your WordPress installation
+  3. Generate audio for each page via the admin interface
+
+  Ready to build?
+                                                                           
+⏺ User approved Claude's plan
+  ⎿  Plan saved to: ~/.claude/plans/elegant-plotting-kernighan.md · /plan to
+      edit
+     Text-to-Speech Plugin for Read Write Now (WordPress)
+
+     Overview
+
+     Create a WordPress plugin that provides high-quality AI text-to-speech 
+     for the literacy education website. Uses OpenAI TTS API to pre-generate
+      natural-sounding audio files, with a single floating "Listen" button
+     on each page.
+
+     Why This Approach
+
+     - AI voices: Natural, clear speech - critical for literacy learners
+     - Pre-generated: Fast playback, no API delays, works offline once 
+     loaded
+     - Floating button: Simple, uncluttered - doesn't overwhelm users who 
+     struggle with reading
+     - WordPress plugin: Self-contained, easy to install/update, works with 
+     Elementor
+
+     ---
+     Plugin Structure
+
+     read-write-now-tts/
+     ├── read-write-now-tts.php          # Main plugin file
+     ├── includes/
+     │   ├── class-tts-generator.php     # OpenAI TTS API integration
+     │   ├── class-content-extractor.php # Extract readable content from 
+     pages
+     │   └── class-admin-page.php        # Admin interface
+     ├── assets/
+     │   ├── css/
+     │   │   └── floating-player.css     # Floating button styles
+     │   └── js/
+     │       └── floating-player.js      # Audio player functionality
+     └── readme.txt
+
+     ---
+     Implementation Steps
+
+     Step 1: Plugin Foundation
+
+     - Create main plugin file with activation/deactivation hooks
+     - Register custom post meta for storing audio file URLs
+     - Add admin menu page under Settings or Tools
+
+     Step 2: Admin Interface
+
+     Create a simple admin page that shows:
+     - List of all pages with their audio status (generated/not 
+     generated/outdated)
+     - "Generate Audio" button for each page
+     - Global settings:
+       - OpenAI API key (stored securely)
+       - Voice selection (alloy, echo, fable, onyx, nova, shimmer)
+       - Speech speed (0.25 to 4.0)
+     - "Regenerate All" button for bulk updates
+
+     Step 3: Content Extractor
+
+     - Extract main content from WordPress/Elementor pages
+     - Strip HTML, keep only readable text
+     - Clean up navigation, footer, repeated elements
+     - Option to manually edit the text before generating audio
+     - Handle special cases:
+       - Skip form pages (Student Application, Tutor Application)
+       - Include alt text for images if meaningful
+
+     Step 4: Audio Generation
+
+     - Use OpenAI TTS API (model: tts-1 or tts-1-hd)
+     - Generate MP3 files
+     - Store in /wp-content/uploads/tts-audio/
+     - Save audio URL and generation timestamp in post meta
+     - Handle long content by chunking if needed (API limit is 4096 chars)
+
+     Step 5: Floating Player (Frontend)
+
+     - Fixed-position button (bottom-right corner)
+     - Only appears on pages that have generated audio
+     - Click to show/hide audio player panel
+     - Player features:
+       - Play/Pause button
+       - Progress bar with seeking
+       - Speed control (0.5x, 1x, 1.5x, 2x)
+       - Time display
+     - Accessible: keyboard navigation, ARIA labels
+     - Mobile-friendly: touch targets, responsive positioning
+
+     Step 6: Content Change Detection
+
+     - Track page content hash to detect changes
+     - Show "outdated" status in admin when content changes
+     - Optional: hook into post_save to flag pages needing regeneration
+
+     ---
+     Pages to Generate Audio For
+
+     Priority 1 - Key User Journey Pages:
+     - Home page (summary of what RWN does)
+     - How Does It Work
+     - Get Help (main landing)
+     - Student Stories (inspiration)
+
+     Priority 2 - Information Pages:
+     - Volunteer Tutor
+     - Tutor Stories
+     - Literacy Training
+     - Workplace Literacy
+     - FAQs
+     - About/Achievements
+
+     Skip (forms/links):
+     - Student Application (form)
+     - Tutor Application (form)
+     - Contact Us (form)
+     - Literacy Links (just links)
+     - Numeracy Links (just links)
+
+     ---
+     Technical Details
+
+     OpenAI TTS API
+
+     // Example API call
+     $response = wp_remote_post('https://api.openai.com/v1/audio/speech', [
+         'headers' => [
+             'Authorization' => 'Bearer ' . $api_key,
+             'Content-Type' => 'application/json',
+         ],
+         'body' => json_encode([
+             'model' => 'tts-1',
+             'input' => $page_text,
+             'voice' => 'nova', // Warm, friendly voice
+             'response_format' => 'mp3',
+             'speed' => 0.9, // Slightly slower for literacy learners
+         ]),
+         'timeout' => 60,
+     ]);
+
+     Floating Button Design
+
+     - Purple background (#5B3D8A) to match brand
+     - White speaker icon
+     - Pulsing animation when playing
+     - Positioned bottom-right, 20px from edges
+     - Expandable panel slides up when clicked
+
+     Audio Player UI
+
+     ┌─────────────────────────────────┐
+     │  ▶️  ━━━━━━━●━━━━━━━━  2:34/5:12 │
+     │      0.5x  1x  1.5x  2x          │
+     └─────────────────────────────────┘
+              🔊 Listen to this page
+
+     ---
+     Cost Estimate
+
+     OpenAI TTS pricing: ~$15 per 1M characters (tts-1)
+
+     | Page              | Est. Characters | Est. Cost |
+     |-------------------|-----------------|-----------|
+     | How It Works      | 2,500           | $0.04     |
+     | Get Help          | 1,500           | $0.02     |
+     | Student Stories   | 3,000           | $0.05     |
+     | ...               | ...             | ...       |
+     | Total (~15 pages) | ~30,000         | ~$0.45    |
+
+     Regeneration cost is minimal - only when content changes.
+
+     ---
+     Files to Create
+
+     1. read-write-now-tts/read-write-now-tts.php - Main plugin file
+     2. read-write-now-tts/includes/class-tts-generator.php - API 
+     integration
+     3. read-write-now-tts/includes/class-content-extractor.php - Content 
+     extraction
+     4. read-write-now-tts/includes/class-admin-page.php - Admin UI
+     5. read-write-now-tts/assets/js/floating-player.js - Frontend player
+     6. read-write-now-tts/assets/css/floating-player.css - Player styles
+
+     ---
+     ---
+     Setup Requirements
+
+     OpenAI API Key Setup
+
+     1. Go to https://platform.openai.com/
+     2. Create account or sign in
+     3. Navigate to API Keys section
+     4. Create new secret key
+     5. Add payment method (pay-as-you-go, ~$5 minimum)
+     6. Enter key in plugin settings
+
+     Plugin Installation
+
+     1. Plugin will be created in: 
+     /Volumes/mark1t/git2/read-write/plugins/read-write-now-tts/
+     2. Copy folder to WordPress: wp-content/plugins/
+     3. Activate in WordPress admin
+     4. Go to Settings > TTS Audio
+     5. Enter OpenAI API key
+     6. Generate audio for each page
+
+     ---
+     Future Enhancements (Not in Scope)
+
+     - Auto-regenerate on content save
+     - Multiple language support
+     - Download audio as MP3 for offline listening
+     - Analytics (track which pages get listened to)
+
+
+
+⏺ Let me set up the task list and start building the plugin.
+
+⏺ Bash(mkdir -p /Volumes/mark1t/git2/read-write/plugins/read-write-now-tts/{incl
+      udes,assets/css,assets/js})
+  ⎿  (No content)
+
+⏺ Write(plugins/read-write-now-tts/read-write-now-tts.php)
+  ⎿  Wrote 311 lines to plugins/read-write-now-tts/read-write-now-tts.php  
+     <?php
+     /**
+      * Plugin Name: Read Write Now TTS
+      * Plugin URI: https://readwrite.linkz.au
+      * Description: AI-powered text-to-speech for literacy education. 
+     Provides natural-sounding audio narration of page content.
+      * Version: 1.0.0
+      * Author: Read Write Now
+      * License: GPL v2 or later
+      * Text Domain: rwn-tts
+      */
+     … +301 lines (ctrl+o to expand)
+
+⏺ Write(plugins/read-write-now-tts/includes/class-tts-generator.php)
+  ⎿  Wrote 308 lines to                                            
+     plugins/read-write-now-tts/includes/class-tts-generator.php
+     <?php
+     /**
+      * OpenAI TTS Generator
+      *
+      * Handles audio generation using OpenAI's text-to-speech API.
+      */
+     if (!defined('ABSPATH')) {
+         exit;
+     }
+     … +298 lines (ctrl+o to expand)
+
+⏺ Write(plugins/read-write-now-tts/includes/class-content-extractor.php)
+  ⎿  Wrote 234 lines to                                               
+     plugins/read-write-now-tts/includes/class-content-extractor.php
+     <?php
+     /**
+      * Content Extractor
+      *
+      * Extracts readable text content from WordPress/Elementor pages.
+      */
+     if (!defined('ABSPATH')) {
+         exit;
+     }
+     … +224 lines (ctrl+o to expand)
+
+⏺ Write(plugins/read-write-now-tts/includes/class-admin-page.php)
+  ⎿  Wrote 318 lines to                                                    
+     plugins/read-write-now-tts/includes/class-admin-page.php
+     <?php
+     /**
+      * Admin Page
+      *
+      * Settings and management interface for the TTS plugin.
+      */
+     if (!defined('ABSPATH')) {
+         exit;
+     }
+     … +308 lines (ctrl+o to expand)
+
+⏺ Write(plugins/read-write-now-tts/assets/js/floating-player.js)
+  ⎿  Wrote 204 lines to                                                    
+     plugins/read-write-now-tts/assets/js/floating-player.js
+     /**
+      * Read Write Now TTS - Floating Audio Player
+      *
+      * A simple, accessible audio player for page narration.
+      */
+     (function() {
+         'use strict';
+         // Exit if no audio configured
+     … +194 lines (ctrl+o to expand)
+
+⏺ Write(plugins/read-write-now-tts/assets/css/floating-player.css)
+  ⎿  Wrote 311 lines to                                       
+     plugins/read-write-now-tts/assets/css/floating-player.css
+     /**
+      * Read Write Now TTS - Floating Player Styles
+      *
+      * Brand colors:
+      * - Purple: #5B3D8A
+      * - Orange: #F5A623
+      */
+     /* Base player container */
+     .rwn-tts-player {
+     … +301 lines (ctrl+o to expand)
+
+⏺ Write(plugins/read-write-now-tts/assets/js/admin.js)
+  ⎿  Wrote 229 lines to plugins/read-write-now-tts/assets/js/admin.js      
+     /**
+      * Read Write Now TTS - Admin JavaScript
+      */
+     (function($) {
+         'use strict';
+         // Preview audio
+         const previewAudio =
+     document.getElementById('rwn-tts-preview-audio');
+     … +219 lines (ctrl+o to expand)
+
+⏺ Write(plugins/read-write-now-tts/assets/css/admin.css)
+  ⎿  Wrote 214 lines to plugins/read-write-now-tts/assets/css/admin.css
+     /**
+      * Read Write Now TTS - Admin Styles
+      */
+     .rwn-tts-admin {
+         max-width: 1200px;
+     }
+     .rwn-tts-intro {
+         background: #f0f0f1;
+     … +204 lines (ctrl+o to expand)
+
+⏺ Write(plugins/read-write-now-tts/readme.txt)
+  ⎿  Wrote 75 lines to plugins/read-write-now-tts/readme.txt     
+     === Read Write Now TTS ===
+     Contributors: readwritenow
+     Tags: text-to-speech, accessibility, audio, literacy, openai
+     Requires at least: 5.8
+     Tested up to: 6.4
+     Stable tag: 1.0.0
+     Requires PHP: 7.4
+     License: GPLv2 or later
+     License URI: https://www.gnu.org/licenses/gpl-2.0.html
+     … +65 lines (ctrl+o to expand)
+
+⏺ Bash(find /Volumes/mark1t/git2/read-write/plugins/read-write-now-tts -type f |
+       head -20)
+  ⎿ /Volumes/mark1t/git2/read-write/plugins/read-write-now-tts/read-write-n
+    ow-tts.php
+    /Volumes/mark1t/git2/read-write/plugins/read-write-now-tts/includes/cla
+    … +14 lines (ctrl+o to expand)
+
+
+
+⏺ Bash(php -l /Volumes/mark1t/git2/read-write/plugins/read-write-now-tts/read-wr
+      ite-now-tts.php && php -l
+      /Volumes/mark1t/git2/read-write/plugins/read-write-now-tts/in…)
+  ⎿  Error: Exit code 127
+     (eval):1: command not found: php
+
+⏺ The WordPress TTS plugin is complete. Here's what was created:
+
+  Plugin Structure
+
+  plugins/read-write-now-tts/
+  ├── read-write-now-tts.php          # Main plugin file
+  ├── includes/
+  │   ├── class-tts-generator.php     # OpenAI TTS API integration
+  │   ├── class-content-extractor.php # Extracts text from Elementor pages
+  │   └── class-admin-page.php        # Admin settings UI
+  ├── assets/
+  │   ├── css/
+  │   │   ├── floating-player.css     # Floating button styles (purple/orange brand)
+  │   │   └── admin.css               # Admin page styles
+  │   └── js/
+  │       ├── floating-player.js      # Audio player with speed control
+  │       └── admin.js                # Admin page interactions
+  └── readme.txt
+
+  Key Features
+
+  1. Admin Page (Settings > TTS Audio)
+    - Enter OpenAI API key
+    - Choose voice (Nova recommended)
+    - Set speech speed (0.9x default - slightly slower for literacy learners)
+    - See all pages with audio status
+    - Generate/regenerate audio per page
+    - Edit text before generating
+  2. Floating Player (frontend)
+    - Purple button in bottom-right corner
+    - Expands to show player controls
+    - Play/pause, progress bar, speed control
+    - Keyboard accessible
+    - Mobile responsive
+  3. Content Extraction
+    - Works with Elementor pages
+    - Strips navigation, forms, buttons
+    - Cleans text for natural speech
+
+  To Install
+
+  1. Copy the folder to your WordPress:
+  scp -r plugins/read-write-now-tts/ yourserver:/path/to/wp-content/plugins/
+  2. Activate in WordPress Admin > Plugins
+  3. Go to Settings > TTS Audio
+  4. Get an OpenAI API key from https://platform.openai.com/api-keys
+  5. Generate audio for your pages
+
+  Want me to make any adjustments to the plugin?
+
+> can you explain how it works on each page, can we edit the transcript etc?
+ 
+
+⏺ Let me explain how the plugin works - this is based on what we just built:
+
+  How It Works Per Page
+
+  Admin Side (Settings > TTS Audio)
+
+  When you go to the admin page, you see a table of all your pages:
+
+  | Page            | Status   | Est. Duration     | Generated    | Actions                          |
+  |-----------------|----------|-------------------|--------------|----------------------------------|
+  | How It Works    | Ready    | ~2:30 (450 words) | Dec 15, 2024 | Regenerate / Edit Text / Preview |
+  | Get Help        | Outdated | ~1:45 (320 words) | Dec 10, 2024 | Regenerate / Edit Text / Preview |
+  | Student Stories | No audio | ~3:00 (540 words) | —            | Generate / Edit Text             |
+
+  Status meanings:
+  - No audio - Never generated
+  - Ready - Audio exists and content hasn't changed
+  - Outdated - Page content changed since audio was generated
+
+  Editing the Transcript (Yes!)
+
+  Click "Edit Text" on any page and you get a modal with the extracted text:
+
+  ┌─────────────────────────────────────────────────┐
+  │ Edit Audio Text                              ✕  │
+  ├─────────────────────────────────────────────────┤
+  │ Edit the text that will be converted to audio. │
+  │                                                 │
+  │ ┌─────────────────────────────────────────────┐ │
+  │ │ How It Works. Your Read Write Now tutor    │ │
+  │ │ will work closely with you on your goals   │ │
+  │ │ and interests to ensure you get the most   │ │
+  │ │ out of your sessions...                    │ │
+  │ │                                            │ │
+  │ │ [You can edit this text freely]            │ │
+  │ └─────────────────────────────────────────────┘ │
+  │                                  2,847 characters│
+  ├─────────────────────────────────────────────────┤
+  │ [Reset to Auto-Extract]          [Save Text]    │
+  └─────────────────────────────────────────────────┘
+
+  What you can do:
+  - Fix pronunciation (e.g., change "1800 018 802" to "1800, 018, 802" for clearer speech)
+  - Remove unwanted text (button labels, repeated phrases)
+  - Add clarifications
+  - Completely rewrite if needed
+  - Click "Reset to Auto-Extract" to go back to the automatic extraction
+
+  After saving, you click "Regenerate" to create new audio with your edited text.
+
+  Frontend (What Visitors See)
+
+  On any page with audio, a purple "Listen" button appears in the bottom-right corner:
+
+                                      ┌──────────────┐
+                                      │ 🔊 Listen    │
+                                      └──────────────┘
+
+  When clicked, it expands to the player:
+
+  ┌─────────────────────────────────┐
+  │  Listen to this page         ✕  │
+  ├─────────────────────────────────┤
+  │  ▶️  ━━━━━━━●━━━━━━━━  2:34/5:12 │
+  │      0.75x  1x  1.25x  1.5x     │
+  └─────────────────────────────────┘
+           🔊 Listen (playing...)
+
+  The button pulses orange while playing so users know it's active.
+
+  ---
+  Does this cover what you wanted to know, or would you like me to add any features to the editing capability?
+
+> ok can you commit and push so i can grab this on my other laptop 
+                                                                           
+⏺ User approved Claude's plan
+  ⎿  Plan saved to: ~/.claude/plans/elegant-plotting-kernighan.md · /plan to
+      edit
+     Text-to-Speech Plugin for Read Write Now (WordPress)
+
+     Overview
+
+     Create a WordPress plugin that provides high-quality AI text-to-speech 
+     for the literacy education website. Uses OpenAI TTS API to pre-generate
+      natural-sounding audio files, with a single floating "Listen" button
+     on each page.
+
+     Why This Approach
+
+     - AI voices: Natural, clear speech - critical for literacy learners
+     - Pre-generated: Fast playback, no API delays, works offline once 
+     loaded
+     - Floating button: Simple, uncluttered - doesn't overwhelm users who 
+     struggle with reading
+     - WordPress plugin: Self-contained, easy to install/update, works with 
+     Elementor
+
+     ---
+     Plugin Structure
+
+     read-write-now-tts/
+     ├── read-write-now-tts.php          # Main plugin file
+     ├── includes/
+     │   ├── class-tts-generator.php     # OpenAI TTS API integration
+     │   ├── class-content-extractor.php # Extract readable content from 
+     pages
+     │   └── class-admin-page.php        # Admin interface
+     ├── assets/
+     │   ├── css/
+     │   │   └── floating-player.css     # Floating button styles
+     │   └── js/
+     │       └── floating-player.js      # Audio player functionality
+     └── readme.txt
+
+     ---
+     Implementation Steps
+
+     Step 1: Plugin Foundation
+
+     - Create main plugin file with activation/deactivation hooks
+     - Register custom post meta for storing audio file URLs
+     - Add admin menu page under Settings or Tools
+
+     Step 2: Admin Interface
+
+     Create a simple admin page that shows:
+     - List of all pages with their audio status (generated/not 
+     generated/outdated)
+     - "Generate Audio" button for each page
+     - Global settings:
+       - OpenAI API key (stored securely)
+       - Voice selection (alloy, echo, fable, onyx, nova, shimmer)
+       - Speech speed (0.25 to 4.0)
+     - "Regenerate All" button for bulk updates
+
+     Step 3: Content Extractor
+
+     - Extract main content from WordPress/Elementor pages
+     - Strip HTML, keep only readable text
+     - Clean up navigation, footer, repeated elements
+     - Option to manually edit the text before generating audio
+     - Handle special cases:
+       - Skip form pages (Student Application, Tutor Application)
+       - Include alt text for images if meaningful
+
+     Step 4: Audio Generation
+
+     - Use OpenAI TTS API (model: tts-1 or tts-1-hd)
+     - Generate MP3 files
+     - Store in /wp-content/uploads/tts-audio/
+     - Save audio URL and generation timestamp in post meta
+     - Handle long content by chunking if needed (API limit is 4096 chars)
+
+     Step 5: Floating Player (Frontend)
+
+     - Fixed-position button (bottom-right corner)
+     - Only appears on pages that have generated audio
+     - Click to show/hide audio player panel
+     - Player features:
+       - Play/Pause button
+       - Progress bar with seeking
+       - Speed control (0.5x, 1x, 1.5x, 2x)
+       - Time display
+     - Accessible: keyboard navigation, ARIA labels
+     - Mobile-friendly: touch targets, responsive positioning
+
+     Step 6: Content Change Detection
+
+     - Track page content hash to detect changes
+     - Show "outdated" status in admin when content changes
+     - Optional: hook into post_save to flag pages needing regeneration
+
+     ---
+     Pages to Generate Audio For
+
+     Priority 1 - Key User Journey Pages:
+     - Home page (summary of what RWN does)
+     - How Does It Work
+     - Get Help (main landing)
+     - Student Stories (inspiration)
+
+     Priority 2 - Information Pages:
+     - Volunteer Tutor
+     - Tutor Stories
+     - Literacy Training
+     - Workplace Literacy
+     - FAQs
+     - About/Achievements
+
+     Skip (forms/links):
+     - Student Application (form)
+     - Tutor Application (form)
+     - Contact Us (form)
+     - Literacy Links (just links)
+     - Numeracy Links (just links)
+
+     ---
+     Technical Details
+
+     OpenAI TTS API
+
+     // Example API call
+     $response = wp_remote_post('https://api.openai.com/v1/audio/speech', [
+         'headers' => [
+             'Authorization' => 'Bearer ' . $api_key,
+             'Content-Type' => 'application/json',
+         ],
+         'body' => json_encode([
+             'model' => 'tts-1',
+             'input' => $page_text,
+             'voice' => 'nova', // Warm, friendly voice
+             'response_format' => 'mp3',
+             'speed' => 0.9, // Slightly slower for literacy learners
+         ]),
+         'timeout' => 60,
+     ]);
+
+     Floating Button Design
+
+     - Purple background (#5B3D8A) to match brand
+     - White speaker icon
+     - Pulsing animation when playing
+     - Positioned bottom-right, 20px from edges
+     - Expandable panel slides up when clicked
+
+     Audio Player UI
+
+     ┌─────────────────────────────────┐
+     │  ▶️  ━━━━━━━●━━━━━━━━  2:34/5:12 │
+     │      0.5x  1x  1.5x  2x          │
+     └─────────────────────────────────┘
+              🔊 Listen to this page
+
+     ---
+     Cost Estimate
+
+     OpenAI TTS pricing: ~$15 per 1M characters (tts-1)
+
+     | Page              | Est. Characters | Est. Cost |
+     |-------------------|-----------------|-----------|
+     | How It Works      | 2,500           | $0.04     |
+     | Get Help          | 1,500           | $0.02     |
+     | Student Stories   | 3,000           | $0.05     |
+     | ...               | ...             | ...       |
+     | Total (~15 pages) | ~30,000         | ~$0.45    |
+
+     Regeneration cost is minimal - only when content changes.
+
+     ---
+     Files to Create
+
+     1. read-write-now-tts/read-write-now-tts.php - Main plugin file
+     2. read-write-now-tts/includes/class-tts-generator.php - API 
+     integration
+     3. read-write-now-tts/includes/class-content-extractor.php - Content 
+     extraction
+     4. read-write-now-tts/includes/class-admin-page.php - Admin UI
+     5. read-write-now-tts/assets/js/floating-player.js - Frontend player
+     6. read-write-now-tts/assets/css/floating-player.css - Player styles
+
+     ---
+     ---
+     Setup Requirements
+
+     OpenAI API Key Setup
+
+     1. Go to https://platform.openai.com/
+     2. Create account or sign in
+     3. Navigate to API Keys section
+     4. Create new secret key
+     5. Add payment method (pay-as-you-go, ~$5 minimum)
+     6. Enter key in plugin settings
+
+     Plugin Installation
+
+     1. Plugin will be created in: 
+     /Volumes/mark1t/git2/read-write/plugins/read-write-now-tts/
+     2. Copy folder to WordPress: wp-content/plugins/
+     3. Activate in WordPress admin
+     4. Go to Settings > TTS Audio
+     5. Enter OpenAI API key
+     6. Generate audio for each page
+
+     ---
+     Future Enhancements (Not in Scope)
+
+     - Auto-regenerate on content save
+     - Multiple language support
+     - Download audio as MP3 for offline listening
+     - Analytics (track which pages get listened to)
+
+
+
+⏺ Bash(git status)
+  ⎿  On branch main                               
+     Your branch is up to date with 'origin/main'.
+     … +16 lines (ctrl+o to expand)
+
+⏺ Bash(git add plugins/read-write-now-tts/ && git status)
+  ⎿  On branch main                               
+     Your branch is up to date with 'origin/main'.
+     … +26 lines (ctrl+o to expand)
+
+⏺ Bash(git commit -m "Add Read Write Now TTS WordPress plugin…)
+  ⎿  [main 6d6ad79] Add Read Write Now TTS WordPress plugin             
+      9 files changed, 2195 insertions(+)
+      create mode 100644 plugins/read-write-now-tts/assets/css/admin.css
+     … +13 lines (ctrl+o to expand)
+
+⏺ Bash(git push)
+  ⎿  To https://github.com/spraymedia/read-write-now.git
+        e24ac69..6d6ad79  main -> main
+
+⏺ Done! Pushed to main:
+
+  6d6ad79 Add Read Write Now TTS WordPress plugin
+
+  On your other laptop, just run:
+  git pull
+
+  The plugin is in plugins/read-write-now-tts/ - copy that folder to your WordPress wp-content/plugins/ directory to install it.
+
+
+
