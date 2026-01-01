@@ -1,0 +1,213 @@
+/**
+ * Read Write Now TTS - Admin Styles
+ */
+
+.rwn-tts-admin {
+    max-width: 1200px;
+}
+
+.rwn-tts-intro {
+    background: #f0f0f1;
+    padding: 15px 20px;
+    border-left: 4px solid #5B3D8A;
+    margin: 20px 0;
+}
+
+.rwn-tts-intro p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.rwn-tts-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.rwn-tts-section {
+    background: white;
+    border: 1px solid #ccd0d4;
+    padding: 20px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+
+.rwn-tts-section h2 {
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    color: #5B3D8A;
+}
+
+/* Status badges */
+.rwn-tts-status {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.rwn-tts-status.status-none {
+    background: #f0f0f1;
+    color: #666;
+}
+
+.rwn-tts-status.status-ready {
+    background: #d4edda;
+    color: #155724;
+}
+
+.rwn-tts-status.status-outdated {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.rwn-tts-status.status-generating {
+    background: #cce5ff;
+    color: #004085;
+}
+
+/* Table adjustments */
+.rwn-tts-section .wp-list-table th,
+.rwn-tts-section .wp-list-table td {
+    vertical-align: middle;
+}
+
+.rwn-tts-section .wp-list-table .row-actions {
+    font-size: 12px;
+    color: #666;
+}
+
+.rwn-tts-section .wp-list-table .description {
+    color: #888;
+    font-size: 11px;
+}
+
+/* Speed slider */
+#rwn_tts_speed {
+    width: 200px;
+    vertical-align: middle;
+}
+
+#rwn_tts_speed_value {
+    display: inline-block;
+    width: 40px;
+    font-weight: 600;
+    color: #5B3D8A;
+}
+
+/* Buttons */
+.rwn-tts-section .button {
+    margin-right: 5px;
+}
+
+/* Modal */
+.rwn-tts-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rwn-tts-modal-content {
+    background: white;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.rwn-tts-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: #5B3D8A;
+    color: white;
+}
+
+.rwn-tts-modal-header h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.rwn-tts-modal-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    opacity: 0.8;
+}
+
+.rwn-tts-modal-close:hover {
+    opacity: 1;
+}
+
+.rwn-tts-modal-body {
+    padding: 20px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.rwn-tts-modal-body .description {
+    margin-bottom: 15px;
+}
+
+#rwn-tts-content-editor {
+    width: 100%;
+    min-height: 300px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+#rwn-tts-content-editor:focus {
+    border-color: #5B3D8A;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(91, 61, 138, 0.2);
+}
+
+.rwn-tts-char-count {
+    text-align: right;
+    font-size: 12px;
+    color: #666;
+    margin-top: 8px;
+}
+
+.rwn-tts-modal-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background: #f9f9f9;
+    border-top: 1px solid #eee;
+}
+
+/* Responsive */
+@media (max-width: 782px) {
+    .rwn-tts-modal-content {
+        width: 95%;
+        max-height: 95vh;
+    }
+
+    .rwn-tts-section .wp-list-table th:nth-child(3),
+    .rwn-tts-section .wp-list-table td:nth-child(3) {
+        display: none;
+    }
+}
